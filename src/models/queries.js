@@ -15,8 +15,15 @@ async function addUser(username, password, member, admin) {
     [username, password, member, admin]
   );
 }
-
+async function retrievePassword(username) {
+  const { rows } = await pool.query(
+    "SELECT password FROM users WHERE username = $1",
+    [username]
+  );
+  return rows[0];
+}
 module.exports = {
   getMessages,
   addUser,
+  retrievePassword,
 };

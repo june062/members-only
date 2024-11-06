@@ -17,7 +17,7 @@ require("./config/passportConfig");
 
 app.use("/", homeRouter);
 app.use("/log-in", loginRouter);
-app.use("sign-up", signupRouter);
+app.use("/sign-up", signupRouter);
 app.use((error, req, res, next) => {
   if (error) {
     console.log(error);

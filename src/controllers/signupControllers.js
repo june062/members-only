@@ -1,6 +1,6 @@
 async function signupViewGet(req, res, next) {
   try {
-    res.render("signupView");
+    res.render("signupPageView");
   } catch (error) {
     next(error);
   }

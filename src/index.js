@@ -11,12 +11,13 @@ app.use(express.urlencoded({ extended: true }));
 
 const homeRouter = require("./routers/homeRouter");
 const loginRouter = require("./routers/loginRouter");
+const signupRouter = require("./routers/signupRouter");
 
 require("./config/passportConfig");
 
 app.use("/", homeRouter);
 app.use("/log-in", loginRouter);
-
+app.use("sign-up", signupRouter);
 app.use((error, req, res, next) => {
   if (error) {
     console.log(error);

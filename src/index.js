@@ -10,14 +10,17 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 const homeRouter = require("./routers/homeRouter");
+const loginRouter = require("./routers/loginRouter");
 
 require("./config/passportConfig");
 
 app.use("/", homeRouter);
+app.use("/log-in", loginRouter);
 
 app.use((error, req, res, next) => {
   if (error) {
     console.log(error);
+    /* send some error page to the client */
   }
 });
 

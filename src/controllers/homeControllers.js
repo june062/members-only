@@ -8,6 +8,7 @@ async function homePageGet(req, res, next) {
     next(error);
   }
 }
+
 module.exports = {
   homePageGet,
 };

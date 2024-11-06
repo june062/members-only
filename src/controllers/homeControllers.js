@@ -1,9 +1,6 @@
 function homePageGet(req, res, next) {
-  try {
-    res.render("homePageView");
-  } catch (error) {
-    next(error);
-  }
+  console.log("hi");
+  res.render("../views/homePageView");
 }
 module.exports = {
   homePageGet,

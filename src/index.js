@@ -1,19 +1,20 @@
-const path = require("node:path");
 const express = require("express");
+const app = express();
+const path = require("node:path");
+require("dotenv").config({ path: "../.env" });
 const session = require("express-session");
 const passport = require("passport");
 
-require("dotenv").config({ path: "../.env" });
-const app = express();
-const homeRouter = () => {};
+console.log(path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
+
+const homeRouter = require("./routers/homeRouter");
 const loginRouter = () => {};
 const signupRouter = () => {};
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-
-app.use(passport.session());
+require("./config/passportConfig");
 
 app.use("/", homeRouter);
 app.use("/login", loginRouter);

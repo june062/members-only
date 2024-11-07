@@ -9,8 +9,9 @@
     <h1>Homepage</h1>
     <a href="/login">Log in</a>
     <a href="/signup">Sign up</a>
-    <%if(locals.user){%>
-      <p><%=locals.user%> is logged in</p>
+    <%if(user){%>
+      <p><%=user.username%> is logged in</p>
+      <a href="/logout">Log out</a>
       <%}%>
    <ul>
 

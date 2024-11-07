@@ -31,7 +31,7 @@ const homeRouter = require("./routers/homeRouter");
 const loginRouter = require("./routers/loginRouter");
 const signupRouter = require("./routers/signupRouter");
 app.use((req, res, next) => {
-  console.log(res.locals);
+  console.log(req.isAuthenticated());
   next();
 });
 app.use("/", homeRouter);

@@ -9,10 +9,20 @@
     <h1>Homepage</h1>
     <a href="/login">Log in</a>
     <a href="/signup">Sign up</a>
-    <%if(user){%>
+    <a href="/createMessage">Create Message</a>
+    <%if(locals.user){%>
       <p><%=user.username%> is logged in</p>
       <a href="/logout">Log out</a>
       <%}%>
+      <%if(locals.admin){%>
+        <p>Admin specific data</p>
+        <%}%>
+      <%if(locals.member){%>
+        <p>Member specific data</p>
+        <%}%>
+      <%if(!locals.user){%>
+        <p>Guest specific data</p>
+        <%}%>
    <ul>
 
         <% for(let i = 0; i < locals.messages.length; i++){%>

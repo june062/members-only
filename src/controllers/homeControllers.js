@@ -3,7 +3,9 @@ const queries = require("../models/queries");
 async function homePageGet(req, res, next) {
   try {
     const messages = await queries.getMessages();
-    res.render("homePageView", { messages: [], user: req.user });
+    res.locals.user = req.user;
+    res.locals.messages = [];
+    res.render("homePageView");
   } catch (error) {
     next(error);
   }

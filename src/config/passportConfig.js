@@ -12,12 +12,13 @@ passport.use(
       );
 
       const user = rows[0];
+
       if (!user) {
         return done(false, null, { message: "Wrong username" });
       }
-      /* const enteredPassword = await crypt.hash(password, 32); */
-      if (password == user.password) {
-        done(null, username);
+      const match = await crypt.compare(password, user.password);
+      if (match) {
+        done(null, user);
       } else {
         done(null, false, { message: "Wrong password" });
       }
@@ -32,7 +33,7 @@ passport.serializeUser((user, done) => {
 });
 passport.deserializeUser(async (userID, done) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM sessions WHERE sid = $1", [
+    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
       userID,
     ]);
     const user = rows[0];

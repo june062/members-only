@@ -2,13 +2,22 @@ const passport = require("passport");
 
 function isLoggedIn(req, res, next) {
   try {
-    passport.authenticate("local", (error, user) => {
-      if (!user) {
-        res.send("You cant access this");
-        res.end();
-      }
-      res.login(user, next);
-    });
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(401).send("You must be signed in to access this");
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+function isAdmin(req, res, next) {
+  try {
+    if (req.user.admin) {
+      next();
+    } else {
+      res.status(401).send("You must be an admin to delete messages");
+    }
   } catch (error) {
     next(error);
   }
@@ -16,4 +25,5 @@ function isLoggedIn(req, res, next) {
 
 module.exports = {
   isLoggedIn,
+  isAdmin,
 };

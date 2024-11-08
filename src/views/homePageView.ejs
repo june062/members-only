@@ -24,13 +24,16 @@
         <li>
           <%=locals.messages[i].message_user %>
           <%if(locals.admin){%>
-            <button><a href="/message/<%=locals.messages[i].id%>">Delete</a></li>
+            <button><a href="/message/<%=locals.messages[i].id%>/delete">Delete</a></li>
             </button>
             
             <%}%>
           
         <ul>
           <%for(const prop in locals.messages[i]){%>
+            <%if(prop === 'id'){%>
+            <%continue%>
+            <%}%>
           <li><%=prop%> : <%=locals.messages[i][prop]%></li>
           <%}%>
         </ul>

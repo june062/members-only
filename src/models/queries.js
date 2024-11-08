@@ -47,10 +47,19 @@ async function createMessage(title, message, sent, user) {
   }
 }
 
+async function deleteMessage(messageID) {
+  try {
+    await pool.query("DELETE FROM messages WHERE id = $1", [Number(messageID)]);
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   getAnonymousMessages,
   getMessagesNotAnonymous,
   addUser,
   retrievePassword,
   createMessage,
+  deleteMessage,
 };

@@ -1,4 +1,5 @@
 const queries = require("../models/queries");
+const authenticationMiddleware = require("../config/authenticationMiddleware");
 const validationMiddleware = [];
 
 async function homePageGet(req, res, next) {
@@ -54,8 +55,22 @@ const newMessagePost = [
     }
   },
 ];
+
+const deleteMessage = [
+  authenticationMiddleware.isLoggedIn,
+  authenticationMiddleware.isAdmin,
+  async (req, res, next) => {
+    try {
+      await queries.deleteMessage(req.params.messageID);
+      res.redirect("/");
+    } catch (error) {
+      next(error);
+    }
+  },
+];
 module.exports = {
   homePageGet,
   logoutGet,
   newMessagePost,
+  deleteMessage,
 };

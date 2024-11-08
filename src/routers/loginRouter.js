@@ -7,9 +7,10 @@ const loginRouter = Router();
 loginRouter.get("/", loginControllers.loginPageGet);
 loginRouter.post(
   "/submit",
+  loginControllers.loginPost,
   passport.authenticate("local", {
     successRedirect: "/",
-    failureMessage: "/login",
+    failureRedirect: "/login",
   })
 );
 

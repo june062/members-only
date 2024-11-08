@@ -9,12 +9,26 @@
     <form action="/login/submit" method="post">
       <p>
         <label for="username">Username: </label>
-        <input type="text" name="username" id="username" />
+        <input
+          type="text"
+          name="username"
+          id="username"
+          required
+          minlength="1"
+          maxlength="30"
+        />
       </p>
 
       <p>
         <label for="password">Password: </label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          minlength="1"
+          maxlength="30"
+        />
       </p>
 
       <p>
@@ -23,5 +37,8 @@
     </form>
     <a href="/">Home</a>
     <a href="/signup">Sign up</a>
+    <%if(locals.errorMessages){%> <%for(let element in errorMessages){%>
+    <p><%=errorMessages[element].msg%></p>
+    <%}%> <%}%>
   </body>
 </html>

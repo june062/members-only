@@ -22,8 +22,21 @@ async function retrievePassword(username) {
   );
   return rows[0];
 }
+
+async function createMessage(title, message, sent, user) {
+  try {
+    await pool.query(
+      "INSERT INTO messages(title, message, sent, message_userid) VALUES($1,$2,$3,$4)",
+      [title, message, sent, Number(user)]
+    );
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   getMessages,
   addUser,
   retrievePassword,
+  createMessage,
 };

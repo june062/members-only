@@ -12,6 +12,6 @@ homeRouter.get("/createMessage", (req, res, next) => {
   }
 });
 
-homeRouter.post("/createMessage/submit");
+homeRouter.post("/createMessage/submit", homeControllers.newMessagePost);
 
 module.exports = homeRouter;

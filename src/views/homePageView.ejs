@@ -14,10 +14,10 @@
       <p><%=user.username%> is logged in</p>
       <a href="/logout">Log out</a>
       <%}%>
-      <%if(locals.admin){%>
+      <%if(locals.user.admin){%>
         <p>Admin specific data</p>
         <%}%>
-      <%if(locals.member){%>
+      <%if(locals.user.member){%>
         <p>Member specific data</p>
         <%}%>
       <%if(!locals.user){%>

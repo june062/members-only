@@ -32,5 +32,8 @@
         <button type="submit">Create message</button>
       </p>
     </form>
+    <%if(locals.errorMessages){%> <%for(let element in errorMessages){%>
+    <p><%=errorMessages[element].msg%></p>
+    <%}%> <%}%>
   </body>
 </html>

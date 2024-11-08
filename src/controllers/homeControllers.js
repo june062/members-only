@@ -1,6 +1,20 @@
 const queries = require("../models/queries");
 const authenticationMiddleware = require("../config/authenticationMiddleware");
-const validationMiddleware = [];
+const { body, validationResult } = require("express-validator");
+const validationMiddleware = [
+  body("title")
+    .trim()
+    .notEmpty()
+    .withMessage("You must enter a title")
+    .isLength({ min: 1, max: 30 })
+    .withMessage("Your title can only be between 1 and 30 characters"),
+  body("message")
+    .trim()
+    .notEmpty()
+    .withMessage("You must enter a message")
+    .isLength({ min: 1, max: 255 })
+    .withMessage("Your title can only be between 1 and 255 characters"),
+];
 
 async function homePageGet(req, res, next) {
   try {
@@ -33,14 +47,22 @@ function logoutGet(req, res, next) {
   });
 }
 const newMessagePost = [
+  authenticationMiddleware.isLoggedIn,
+  validationMiddleware,
   (req, res, next) => {
-    if (req.isAuthenticated()) {
-      next();
-    } else {
-      res.end("You are not authorized to create a message");
+    const errors = validationResult(req);
+    try {
+      if (!errors.isEmpty()) {
+        res.locals.errorMessages = errors.array();
+        console.log(errors.array());
+        res.status(400).render("createMessagePageView");
+      } else {
+        next();
+      }
+    } catch (error) {
+      next(error);
     }
   },
-  validationMiddleware,
   async (req, res, next) => {
     try {
       await queries.createMessage(

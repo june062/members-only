@@ -1,8 +1,21 @@
 const pool = require("./pool");
 
-async function getMessages() {
+async function getAnonymousMessages() {
   try {
-    const { rows } = await pool.query("SELECT * FROM messages");
+    const { rows } = await pool.query(
+      "SELECT messages.id, title, message,TO_CHAR(sent, 'Month DD, YYYY') AS sent FROM messages"
+    );
+    return rows;
+  } catch (error) {
+    return error;
+  }
+}
+async function getMessagesNotAnonymous() {
+  try {
+    const { rows } = await pool.query(
+      "SELECT messages.id, username, title, message, TO_CHAR(sent, 'Month DD, YYYY') AS sent FROM messages JOIN users ON messages.message_userid = users.id"
+    );
+
     return rows;
   } catch (error) {
     return error;
@@ -35,7 +48,8 @@ async function createMessage(title, message, sent, user) {
 }
 
 module.exports = {
-  getMessages,
+  getAnonymousMessages,
+  getMessagesNotAnonymous,
   addUser,
   retrievePassword,
   createMessage,

@@ -3,7 +3,17 @@ const validationMiddleware = [];
 
 async function homePageGet(req, res, next) {
   try {
-    const messages = await queries.getMessages();
+    let messages = await queries.getAnonymousMessages();
+
+    if (req.user) {
+      res.locals.member = req.user.member;
+      res.locals.admin = req.user.admin;
+    }
+
+    if (res.locals.member || res.locals.admin) {
+      messages = await queries.getMessagesNotAnonymous();
+    }
+
     res.locals.user = req.user;
     res.locals.messages = messages;
     res.render("homePageView");

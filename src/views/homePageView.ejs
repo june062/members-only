@@ -14,12 +14,7 @@
       <p><%=user.username%> is logged in</p>
       <a href="/logout">Log out</a>
       <%}%>
-      <%if(locals.user.admin){%>
-        <p>Admin specific data</p>
-        <%}%>
-      <%if(locals.user.member){%>
-        <p>Member specific data</p>
-        <%}%>
+      
       <%if(!locals.user){%>
         <p>Guest specific data</p>
         <%}%>
@@ -28,8 +23,12 @@
         <% for(let i = 0; i < locals.messages.length; i++){%>
         <li>
           <%=locals.messages[i].message_user %>
-          <button><a href="/message/<%=locals.messages[i].id%>">view</a></li>
-          </button>
+          <%if(locals.admin){%>
+            <button><a href="/message/<%=locals.messages[i].id%>">Delete</a></li>
+            </button>
+            
+            <%}%>
+          
         <ul>
           <%for(const prop in locals.messages[i]){%>
           <li><%=prop%> : <%=locals.messages[i][prop]%></li>

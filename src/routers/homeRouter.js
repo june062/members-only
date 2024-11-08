@@ -6,10 +6,12 @@ homeRouter.get("/", homeControllers.homePageGet);
 homeRouter.get("/logout", homeControllers.logoutGet);
 homeRouter.get("/createMessage", (req, res, next) => {
   if (req.isAuthenticated()) {
-    res.end("Create message form");
+    res.render("createMessagePageView");
   } else {
     res.end("You need to login to create a message");
   }
 });
+
+homeRouter.post("/createMessage/submit");
 
 module.exports = homeRouter;
